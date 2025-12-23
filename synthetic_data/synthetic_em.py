@@ -177,6 +177,10 @@ def main():
             frame   -= bub * darkness
 
         frame = np.clip(frame, 0, 255).astype(np.uint8)
+      
+        # CLAHE (adaptive histogram equalisation) 
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        frame_eq = clahe.apply(frame)
 
         # save frame + mask
         Image.fromarray(frame).save(out_dir / f"synth_frame_{t:03d}.png")
